@@ -1,0 +1,44 @@
+<div class="container mt-4">
+    <h2 class="text-center">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h2>
+  
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="ProductName">Product Name</label>
+        <input type="text" id="ProductName" formControlName="ProductName" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="Price">Price</label>
+        <input type="number" id="Price" formControlName="Price" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea id="Description" formControlName="Description" class="form-control"></textarea>
+      </div>
+  
+      <div class="form-group">
+        <label for="StockQuantity">Stock Quantity</label>
+        <input type="number" id="StockQuantity" formControlName="StockQuantity" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="CategoryId">Category</label>
+        <input type="number" id="CategoryId" formControlName="CategoryId" class="form-control" />
+      </div>
+  
+      <div class="form-group">
+        <label for="Productimg">Product Image</label>
+        <input type="file" id="Productimg" (change)="onFileSelect($event)" class="form-control" />
+      </div>
+  
+      <!-- You can add this field if you want the admin to enter the ID, but it's typically not necessary -->
+      <div class="form-group">
+        <label for="CreatedByAdminId">Created By Admin ID</label>
+        <input type="text" id="CreatedByAdminId"  class="form-control" />
+      </div>
+  
+      <button type="submit" class="btn btn-primary mt-3" [disabled]="productForm.invalid">Save</button>
+    </form>
+  </div>
+  

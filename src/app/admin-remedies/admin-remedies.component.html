@@ -1,0 +1,88 @@
+<div class="container mt-4">
+    <h2 class="text-center">Remedies Management</h2>
+  
+    <!-- Add Remedy Button -->
+    <div class="text-end mb-3">
+      <button class="btn btn-success" (click)="onAddRemedy()">Add Remedy</button>
+    </div>
+  
+    <!-- Remedy Form (Add/Edit) -->
+    <div *ngIf="selectedRemedy" class="mb-4">
+      <h3>{{ isAddMode ? 'Add Remedy' : 'Edit Remedy' }}</h3>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="remedyName">Remedy Name</label>
+          <input type="text" id="remedyName" class="form-control" [(ngModel)]="selectedRemedy.RemedyName" name="remedyName" required />
+        </div>
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" id="description" class="form-control" [(ngModel)]="selectedRemedy.Description" name="description" required />
+        </div>
+        <div class="form-group">
+          <label for="benefits">Benefits</label>
+          <input type="text" id="benefits" class="form-control" [(ngModel)]="selectedRemedy.Benefits" name="benefits" />
+        </div>
+        <div class="form-group">
+          <label for="preparationMethod">Preparation Method</label>
+          <input type="text" id="preparationMethod" class="form-control" [(ngModel)]="selectedRemedy.PreparationMethod" name="preparationMethod" />
+        </div>
+        <div class="form-group">
+          <label for="usageInstructions">Usage Instructions</label>
+          <input type="text" id="usageInstructions" class="form-control" [(ngModel)]="selectedRemedy.UsageInstructions" name="usageInstructions" />
+        </div>
+        <div class="form-group">
+          <label for="categoryId">Category ID</label>
+          <input type="number" id="categoryId" class="form-control" [(ngModel)]="selectedRemedy.CategoryId" name="categoryId" required />
+        </div>
+        <div class="form-group">
+          <label for="createdByAdminId">Admin ID</label>
+          <input type="number" id="createdByAdminId" class="form-control" [(ngModel)]="selectedRemedy.CreatedByAdminId" name="createdByAdminId" required />
+        </div>
+  
+        <!-- Image Upload -->
+        <div class="form-group">
+          <label for="image">Upload Image</label>
+          <input type="file" id="image" class="form-control" (change)="onImageChange($event)" />
+          <img *ngIf="imagePreview" [src]="imagePreview" alt="Image Preview" width="100" height="100" class="mt-2" />
+        </div>
+  
+        <button type="submit" class="btn btn-primary mt-3">{{ isAddMode ? 'Add Remedy' : 'Update Remedy' }}</button>
+      </form>
+    </div>
+  
+    <!-- Remedies Table -->
+    <table class="table table-bordered table-striped text-center">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Remedy Name</th>
+            <th>Description</th>
+            <th>Image</th>  <!-- Added a new column for image -->
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let remedy of remedies; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ remedy.RemedyName }}</td>
+            <td>{{ remedy.Description }}</td>
+            
+            <!-- Display Image if it exists -->
+            <td>
+              <img *ngIf="remedy.Remediesimg" 
+                   [src]="'data:image/jpeg;base64,' + remedy.Remediesimg" 
+                   alt="Remedy Image" width="100" height="100" />
+              <!-- Fallback if no image exists -->
+              <span *ngIf="!remedy.Remediesimg">No Image</span>
+            </td>
+      
+            <td>
+              <button class="btn btn-primary btn-sm me-2" (click)="onEditRemedy(remedy)">Edit</button>
+              <button class="btn btn-danger btn-sm" (click)="onDeleteRemedy(remedy.RemedyId)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+  </div>
+  
